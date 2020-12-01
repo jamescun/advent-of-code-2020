@@ -22,14 +22,18 @@ func main() {
 		exitError(1, "read: %w", err)
 	}
 
+	// NOTE(jc): I hope there isn't a part three which uses four values, I
+	// cannot be bothered refactoring this into a recursive function :)
 	for i := 0; i < len(numbers); i++ {
-		for j := i; j < len(numbers); j++ {
-			x, y := numbers[i], numbers[j]
-			if (x + y) != targetSum {
-				continue
-			}
+		for j := 0; j < len(numbers); j++ {
+			for k := 0; k < len(numbers); k++ {
+				x, y, z := numbers[i], numbers[j], numbers[k]
+				if (x + y + z) != targetSum {
+					continue
+				}
 
-			fmt.Fprintf(os.Stdout, "Solution: %d + %d = %d, %d * %d = %d\n", x, y, targetSum, x, y, (x * y))
+				fmt.Fprintf(os.Stdout, "Solution: %d + %d + %d = %d, %d * %d * %d = %d\n", x, y, z, targetSum, x, y, z, (x * y * z))
+			}
 		}
 	}
 }
